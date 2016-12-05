@@ -1,4 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-ReactDOM.render( ( <div><h1>Hello World</h1></div> ), document.getElementById( 'app' ) );
+import Bootstrap from 'bootstrap-without-jquery'; // eslint-disable-line no-unused-vars
+
+import GameOfLife from './GameOfLife';
+
+ReactDOM.render( ( <GameOfLife /> ), document.getElementById( 'app' ) );
