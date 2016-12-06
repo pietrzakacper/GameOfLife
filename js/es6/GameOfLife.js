@@ -1,5 +1,7 @@
 import React from 'react';
-import { range } from 'underscore';
+
+import GameTools from './GameTools';
+
 import Header from './components/Header';
 import ControlBar from './components/ControlBar';
 import Board from './components/Board';
@@ -16,9 +18,8 @@ class GameOfLife extends React.Component{
 		this.handleCellClick = this.handleCellClick.bind( this );
 
 		const boardSize = 11;
-
 		this.state = {
-			cellsData: range( boardSize ).map( () => range( boardSize ).map( () => 'dead' ) )
+			cellsData: GameTools.getBoardWithBlinker( boardSize )
 		};
 	}
 
@@ -35,11 +36,7 @@ class GameOfLife extends React.Component{
 	}
 
 	handleCellClick( idX, idY ){
-		const cellsData = this.state.cellsData.splice( 0 );
-
-		cellsData[ idX ][ idY ] = ( cellsData[ idX ][ idY ] === 'dead' ) ? 'alive' : 'dead';
-
-		this.setState( { cellsData } );
+		this.setState( {  cellsData: GameTools.getBoardAfterEvaluation( this.state.cellsData ) } );
 	}
 
 	render(){
