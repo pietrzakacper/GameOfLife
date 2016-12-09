@@ -12,7 +12,7 @@ body {
     border: 1px solid #3E50B4;
     margin-bottom: 15px; }
   body #app .board {
-    border: 2px solid #FFFFFF;
+    border: 1px solid #FFFFFF;
     display: inline-block;
     margin: auto; }
     body #app .board .cell-row {
@@ -30,3 +30,10 @@ body {
       background-color: #f4749e; }
     body #app .board .cell.dead {
       background-color: #000000; }
+
+@media (min-width: 1200px) {
+  body > .container > #app .board .cell-row {
+    height: 14px; }
+    body > .container > #app .board .cell-row .cell {
+      width: 14px;
+      height: 14px; } }

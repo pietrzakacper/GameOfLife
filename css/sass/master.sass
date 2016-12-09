@@ -23,7 +23,7 @@ body
       margin-bottom: 15px
 
     .board
-      border: 2px solid $white
+      border: 1px solid $white
       display: inline-block
       margin: auto
 
@@ -46,3 +46,11 @@ body
 
       .cell.dead
         background-color: $black
+
+@media( min-width: 1200px )
+  body > .container > #app .board
+    .cell-row
+      height: 14px
+      .cell
+        width: 14px
+        height: 14px

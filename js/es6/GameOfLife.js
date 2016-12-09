@@ -5,8 +5,7 @@ import getTargetSize from './BoardResponsivenessController';
 import Header from './components/Header';
 import ControlBar from './components/ControlBar';
 import Board from './components/Board';
-import SettingsBar from './components/SettingsBar';
-import Instruction from './components/Instruction';
+import Statistics from './components/Statistics';
 
 class GameOfLife extends React.Component{
 	constructor( props ){
@@ -25,7 +24,8 @@ class GameOfLife extends React.Component{
 
 		this.state = {
 			cellsData: GameTools.getBoardFilledWithRandomCells( this.boardSize ),
-			isRunning: false
+			isRunning: false,
+			generations: 0
 		};
 	}
 
@@ -51,13 +51,13 @@ class GameOfLife extends React.Component{
 	}
 
 	runGame(){
-		this.setState( {  cellsData: GameTools.getBoardAfterEvaluation( this.state.cellsData ) } );
+		this.setState( {  cellsData: GameTools.getBoardAfterEvaluation( this.state.cellsData ), generations: this.state.generations + 1 } );
 
 		if ( GameTools.isFilledWithDeadCellsOnly( this.state.cellsData ) ){
 			this.pauseGame();
 			return;
 		}
-		this.gameTimer = setTimeout( this.runGame, 250 );
+		this.gameTimer = setTimeout( this.runGame, 200 );
 	}
 
 	pauseGame(){
@@ -66,7 +66,7 @@ class GameOfLife extends React.Component{
 	}
 
 	clearBoard( ){
-		this.setState( { cellsData: GameTools.getBoardFilledWithDeadCells( this.boardSize ) } );
+		this.setState( { cellsData: GameTools.getBoardFilledWithDeadCells( this.boardSize ), generations: 0 } );
 		this.pauseGame();
 	}
 
@@ -80,8 +80,7 @@ class GameOfLife extends React.Component{
     <Header />
     <ControlBar run={this.onRunGameClick} pause={this.pauseGame} clear={this.clearBoard} />
     <Board cellsData={this.state.cellsData} handleCellClick={this.handleCellClick} />
-    <SettingsBar />
-    <Instruction />
+    <Statistics cells={GameTools.getLivingCellsNumber( this.state.cellsData )} generations={this.state.generations} />
   </div>
 		);
 	}

@@ -34,7 +34,7 @@ const	getBoardAfterEvaluation = board =>
 				return 'newborn';
 			}
 			if ( neighbours !== 3 && neighbours !== 2 && ( cellData === 'alive' || cellData === 'newborn' ) ){
-				return 'dead';board.length;
+				return 'dead';
 			}
 			if ( cellData === 'newborn' ){
 				return 'alive';
@@ -63,6 +63,10 @@ const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
 const isFilledWithDeadCellsOnly =  board =>
 	JSON.stringify( board ) === JSON.stringify( getBoardFilledWithDeadCells( new SizeXY( board.length, board[ 0 ].length ) ) );
 
+const getLivingCellsNumber = board => {
+	return board.reduce( ( p, c ) => p + c.reduce( ( previousValue, currentCell ) => ( currentCell === 'alive' || currentCell === 'newborn' ) ? previousValue + 1 : previousValue, 0 ), 0 );
+};
+
 export default {
-	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly
+	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly, getLivingCellsNumber
 };
