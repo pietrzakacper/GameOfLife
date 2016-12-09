@@ -1,12 +1,13 @@
 import { range } from 'underscore';
+import SizeXY from './SizeXY';
 
 const	getBoardFilledWithRandomCells = boardSize =>
-		range( boardSize ).map( () => range( boardSize ).map( () =>
+		range( boardSize.x ).map( () => range( boardSize.y ).map( () =>
 			(  Math.floor( Math.random() * 3 ) ) ? 'dead' : 'alive' // possiblitiy 2:1
 		) );
 
 const	getBoardFilledWithDeadCells = boardSize =>
-		range( boardSize ).map( () => range( boardSize ).map( () => 'dead' ) );
+		range( boardSize.x ).map( () => range( boardSize.y ).map( () => 'dead' ) );
 
 const	getBoardAfterEvaluation = board =>
 		board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
@@ -33,7 +34,7 @@ const	getBoardAfterEvaluation = board =>
 				return 'newborn';
 			}
 			if ( neighbours !== 3 && neighbours !== 2 && ( cellData === 'alive' || cellData === 'newborn' ) ){
-				return 'dead';
+				return 'dead';board.length;
 			}
 			if ( cellData === 'newborn' ){
 				return 'alive';
@@ -60,7 +61,7 @@ const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
 };
 
 const isFilledWithDeadCellsOnly =  board =>
-	JSON.stringify( board ) === JSON.stringify( getBoardFilledWithDeadCells( board.length ) );
+	JSON.stringify( board ) === JSON.stringify( getBoardFilledWithDeadCells( new SizeXY( board.length, board[ 0 ].length ) ) );
 
 export default {
 	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly

@@ -5,7 +5,7 @@ const	getTargetSize = ( container, cellSize ) => {
 	const boardWidth = containerWidth / cellSize;
 	const boardHeight = ( boardWidth < 30 ) ? boardWidth : 30;
 
-	return new SizeXY( boardWidth, boardHeight );
+	return new SizeXY(  boardHeight, boardWidth );
 };
 
-export default { getTargetSize };
+export default getTargetSize;

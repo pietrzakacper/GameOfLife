@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GameTools from './GameTools';
-
+import getTargetSize from './BoardResponsivenessController';
 import Header from './components/Header';
 import ControlBar from './components/ControlBar';
 import Board from './components/Board';
@@ -12,13 +12,17 @@ class GameOfLife extends React.Component{
 	constructor( props ){
 		super( props );
 
+		this.cellSize = 26;
+
 		this.runGame = this.runGame.bind( this );
 		this.pauseGame = this.pauseGame.bind( this );
 		this.clearBoard = this.clearBoard.bind( this );
 		this.handleCellClick = this.handleCellClick.bind( this );
 		this.onRunGameClick = this.onRunGameClick.bind( this );
 		this.onResize = this.onResize.bind( this );
-		this.boardSize = Math.floor( props.container.clientWidth / 26 );
+
+		this.boardSize = getTargetSize( props.container, this.cellSize );
+
 		this.state = {
 			cellsData: GameTools.getBoardFilledWithRandomCells( this.boardSize ),
 			isRunning: false
@@ -26,20 +30,17 @@ class GameOfLife extends React.Component{
 	}
 
 	componentDidMount(){
-		this.runGame();
-		this.setState( { isRunning: true } );
-
-		// onResizePart
 		this.appContainer = document.getElementById( 'app' );
 		window.addEventListener( 'resize', this.onResize );
+
+		// start Game
+		this.runGame();
+		this.setState( { isRunning: true } );
 	}
 
 	onResize(){
-		this.boardSize = Math.floor( this.props.container.clientWidth / 26 );
-		if ( this.boardSize > 30 ){
-			this.boardSize = 30;
-		}
-		this.clearBoard( this.boardSize );
+		this.boardSize = getTargetSize( this.props.container, this.cellSize );
+		this.clearBoard();
 	}
 	onRunGameClick(){
 		if ( this.state.isRunning ){
