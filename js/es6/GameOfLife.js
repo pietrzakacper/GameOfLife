@@ -57,7 +57,7 @@ class GameOfLife extends React.Component{
 			this.pauseGame();
 			return;
 		}
-		this.gameTimer = setTimeout( this.runGame, 200 );
+		this.gameTimer = setTimeout( this.runGame, 50 );
 	}
 
 	pauseGame(){
