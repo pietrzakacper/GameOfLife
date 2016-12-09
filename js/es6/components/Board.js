@@ -12,8 +12,10 @@ const getCells = ( data, handleCellClick ) => {
 };
 
 const Board = props => (
-  <div className='board'>
-    {getCells( props.cellsData, props.handleCellClick )}
+  <div className='text-center'>
+    <div className='board'>
+      {getCells( props.cellsData, props.handleCellClick )}
+    </div>
   </div>
 );
 

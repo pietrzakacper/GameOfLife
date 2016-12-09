@@ -13,11 +13,9 @@ body {
     margin-bottom: 15px; }
   body #app .board {
     border: 2px solid #FFFFFF;
-    width: 268px;
-    height: 268px;
+    display: inline-block;
     margin: auto; }
     body #app .board .cell-row {
-      width: 264px;
       height: 24px;
       margin: 0; }
     body #app .board .cell {

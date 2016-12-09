@@ -50,6 +50,18 @@ const getBoardWithBlinker =  boardSize => {
 	return board;
 };
 
+const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
+	const boardTMP = board.slice();
+	const cellData = boardTMP[ idX ][ idY ];
+
+	boardTMP[ idX ][ idY ] = ( cellData === 'dead' ) ? 'alive' : 'dead';
+
+	return boardTMP;
+};
+
+const isFilledWithDeadCellsOnly =  board =>
+	JSON.stringify( board ) === JSON.stringify( getBoardFilledWithDeadCells( board.length ) );
+
 export default {
-	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker
+	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly
 };
