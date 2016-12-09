@@ -12,6 +12,7 @@ body {
     border: 1px solid #3E50B4;
     margin-bottom: 15px; }
   body #app .board {
+    font-size: 0px;
     border: 1px solid #FFFFFF;
     display: inline-block;
     margin: auto; }
