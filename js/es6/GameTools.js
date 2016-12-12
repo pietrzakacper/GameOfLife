@@ -9,46 +9,59 @@ const	getBoardFilledWithRandomCells = boardSize =>
 const	getBoardFilledWithDeadCells = boardSize =>
 		range( boardSize.x ).map( () => range( boardSize.y ).map( () => 'dead' ) );
 
-const	getBoardAfterEvaluation = board =>
-		board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
-			let neighbours = 0;
+const isCellAlive =  cell => cell === 'alive' || cell === 'newborn';
 
-			for ( let x = -1; x <= 1 ; ++x ){
-				for ( let y = -1; y <= 1; ++y ){
-					if ( x === 0 && y === 0 ){
-						continue;
-					}
-					let neighbourIndexX = ( x + indexX >= 0 ) ? ( x + indexX ) : ( board.length + x );
-					neighbourIndexX = ( neighbourIndexX < board.length ) ? ( neighbourIndexX ) : ( x );
+const getNumberOfNeighbours = ( board, indexX, indexY ) => {
 
-					let neighbourIndexY = ( y + indexY >= 0 ) ? ( y + indexY ) : ( cellRow.length + y );
-					neighbourIndexY = ( neighbourIndexY < cellRow.length ) ? ( neighbourIndexY ) : ( y );
+	const lengthX = board.length;
+	const lengthY = board[ 0 ].length;
 
-					if ( boardTMP[ neighbourIndexX ][ neighbourIndexY ] === 'alive' || boardTMP[ neighbourIndexX ][ neighbourIndexY ] === 'newborn' ){
-						neighbours++;
-					}
-				}
-			}
+	const left = ( indexX === 0 ) ? lengthX - 1 : indexX - 1;
+	const right = ( indexX === lengthX - 1 ) ? 0 : indexX + 1;
+	const top = ( indexY === 0 ) ? lengthY - 1 : indexY - 1;
+	const bottom = ( indexY === lengthY - 1 ) ? 0 : indexY + 1;
 
-			if ( neighbours === 3 && cellData === 'dead' ){
-				return 'newborn';
-			}
-			if ( neighbours !== 3 && neighbours !== 2 && ( cellData === 'alive' || cellData === 'newborn' ) ){
-				return 'dead';
-			}
-			if ( cellData === 'newborn' ){
-				return 'alive';
-			}
-			return cellData;
+	const neighboursIndexes = [
+		[ left, top ],
+		[ left, indexY ],
+		[ left, bottom ],
+		[ indexX, top ],
+		[ indexX, bottom ],
+		[ right, top ],
+		[ right, indexY ],
+		[ right, bottom ]
+	];
 
-		} ) );
+	let neighbours = 0;
 
-const getBoardWithBlinker =  boardSize => {
-	const board = getBoardFilledWithDeadCells( boardSize );
+	neighboursIndexes.forEach( indexesPair => {
+		if ( isCellAlive( board[ indexesPair[ 0 ] ][ indexesPair[ 1 ] ] ) ){
+			neighbours++;
+		}
+	} );
 
-	board[ 4 ][ 5 ] = board[ 5 ][ 5 ] = board[ 6 ][ 5 ] = board[ 5 ][ 4 ] = board[ 5 ][ 6 ] = 'alive';
+	return neighbours;
+};
 
-	return board;
+const	getBoardAfterEvaluation = board => {
+
+	const rt =		board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
+		const neighbours = getNumberOfNeighbours( boardTMP, indexX, indexY );
+
+		if ( neighbours === 3 && cellData === 'dead' ){
+			return 'newborn';
+		}
+		if ( neighbours !== 3 && neighbours !== 2 && ( cellData === 'alive' || cellData === 'newborn' ) ){
+			return 'dead';
+		}
+		if ( cellData === 'newborn' ){
+			return 'alive';
+		}
+		return cellData;
+
+	} ) );
+
+	return rt;
 };
 
 const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
@@ -68,5 +81,5 @@ const getLivingCellsNumber = board => {
 };
 
 export default {
-	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardWithBlinker, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly, getLivingCellsNumber
+	getBoardAfterEvaluation, getBoardFilledWithDeadCells, getBoardFilledWithRandomCells, getBoardAfterCellStateToggle, isFilledWithDeadCellsOnly, getLivingCellsNumber
 };

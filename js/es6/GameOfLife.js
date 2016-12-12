@@ -12,7 +12,7 @@ class GameOfLife extends React.Component{
 		super( props );
 
 		this.cellSize = 26;
-
+		this.refreshInterval = 250; // in miliseconds
 		this.runGame = this.runGame.bind( this );
 		this.pauseGame = this.pauseGame.bind( this );
 		this.clearBoard = this.clearBoard.bind( this );
@@ -33,7 +33,6 @@ class GameOfLife extends React.Component{
 		this.appContainer = document.getElementById( 'app' );
 		window.addEventListener( 'resize', this.onResize );
 
-		// start Game
 		this.runGame();
 		this.setState( { isRunning: true } );
 	}
@@ -57,7 +56,8 @@ class GameOfLife extends React.Component{
 			this.pauseGame();
 			return;
 		}
-		this.gameTimer = setTimeout( this.runGame, 50 );
+
+		this.gameTimer = setTimeout( this.runGame, this.refreshInterval );
 	}
 
 	pauseGame(){
