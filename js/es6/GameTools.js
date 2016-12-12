@@ -43,9 +43,8 @@ const getNumberOfNeighbours = ( board, indexX, indexY ) => {
 	return neighbours;
 };
 
-const	getBoardAfterEvaluation = board => {
-
-	const rt =		board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
+const	getBoardAfterEvaluation = board => 
+	board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
 		const neighbours = getNumberOfNeighbours( boardTMP, indexX, indexY );
 
 		if ( neighbours === 3 && cellData === 'dead' ){
@@ -61,8 +60,6 @@ const	getBoardAfterEvaluation = board => {
 
 	} ) );
 
-	return rt;
-};
 
 const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
 	const boardTMP = board.slice();
