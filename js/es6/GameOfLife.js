@@ -24,17 +24,18 @@ class GameOfLife extends React.Component{
 
 		this.state = {
 			cellsData: GameTools.getBoardFilledWithRandomCells( this.boardSize ),
-			isRunning: false,
 			generations: 0
 		};
+
+		this.isRunning = false;
 	}
 
 	componentDidMount(){
 		this.appContainer = document.getElementById( 'app' );
 		window.addEventListener( 'resize', this.onResize );
 
+		this.isRunning = true;
 		this.runGame();
-		this.setState( { isRunning: true } );
 	}
 
 	onResize(){
@@ -42,27 +43,26 @@ class GameOfLife extends React.Component{
 		this.clearBoard();
 	}
 	onRunGameClick(){
-		if ( this.state.isRunning ){
+		if ( this.isRunning ){
 			return;
 		}
-		this.setState( { isRunning: true } );
+		this.isRunning = true;
 		this.runGame();
 	}
 
 	runGame(){
-		this.setState( {  cellsData: GameTools.getBoardAfterEvaluation( this.state.cellsData ), generations: this.state.generations + 1 } );
+		this.setState( prevState => ( {  cellsData: GameTools.getBoardAfterEvaluation( prevState.cellsData ), generations: prevState.generations + 1 } ) );
 
 		if ( GameTools.isFilledWithDeadCellsOnly( this.state.cellsData ) ){
 			this.pauseGame();
 			return;
 		}
-
 		this.gameTimer = setTimeout( this.runGame, this.refreshInterval );
 	}
 
 	pauseGame(){
 		clearTimeout( this.gameTimer );
-		this.setState( { isRunning: false } );
+		this.isRunning = false;
 	}
 
 	clearBoard( ){
@@ -71,7 +71,7 @@ class GameOfLife extends React.Component{
 	}
 
 	handleCellClick( idX, idY ){
-		this.setState( {  cellsData: GameTools.getBoardAfterCellStateToggle( this.state.cellsData, idX, idY ) } );
+		this.setState( prevState => ( {  cellsData: GameTools.getBoardAfterCellStateToggle( prevState.cellsData, idX, idY ) } ) );
 	}
 
 	render(){
