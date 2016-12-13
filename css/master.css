@@ -15,7 +15,8 @@ body {
     font-size: 0px;
     border: 1px solid #FFFFFF;
     display: inline-block;
-    margin: auto; }
+    margin: auto;
+    cursor: default; }
     body #app .board .cell-row {
       height: 24px;
       margin: 0; }
