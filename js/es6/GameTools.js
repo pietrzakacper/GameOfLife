@@ -43,7 +43,7 @@ const getNumberOfNeighbours = ( board, indexX, indexY ) => {
 	return neighbours;
 };
 
-const	getBoardAfterEvaluation = board => 
+const	getBoardAfterEvaluation = board =>
 	board.map( ( cellRow, indexX, boardTMP ) => cellRow.map( ( cellData, indexY ) => {
 		const neighbours = getNumberOfNeighbours( boardTMP, indexX, indexY );
 
@@ -59,7 +59,6 @@ const	getBoardAfterEvaluation = board =>
 		return cellData;
 
 	} ) );
-
 
 const getBoardAfterCellStateToggle = ( board, idX, idY ) => {
 	const boardTMP = board.slice();

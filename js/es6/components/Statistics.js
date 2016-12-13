@@ -1,9 +1,17 @@
 import React from 'react';
-import { Well } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 const Statistics = ( props ) =>
-( <div className='stats'>
-  	<span>Number of living cells: {props.cells}</span>{' '}<span>Number of generations: {props.generations}</span>
-	</div>
+( <Grid className='stats'>
+  <Row>
+    <Col className='text-center game-info' md={5}>Number of living cells: {props.cells}</Col>
+    <Col className='text-center game-info' md={5} mdOffset={2}>Number of generations: {props.generations}</Col>
+  </Row>
+</Grid>
 );
+
+Statistics.propTypes = {
+	cells: React.PropTypes.number,
+	generations: React.PropTypes.number
+};
 
 export default Statistics;
