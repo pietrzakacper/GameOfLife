@@ -54,7 +54,7 @@ class GameOfLife extends React.Component{
 		this.setState( prevState => ( {  cellsData: GameTools.getBoardAfterEvaluation( prevState.cellsData ), generations: prevState.generations + 1 } ) );
 
 		if ( GameTools.isFilledWithDeadCellsOnly( this.state.cellsData ) ){
-			this.pauseGame();
+			this.clearBoard();
 			return;
 		}
 		this.gameTimer = setTimeout( this.runGame, this.refreshInterval );
