@@ -22,7 +22,7 @@ body {
     body #app .board .cell {
       width: 24px;
       height: 24px;
-      border: 1px solid rgba(187, 187, 187, 0.54);
+      border: 1px solid rgba(187, 187, 187, 0.38);
       margin: 0;
       display: inline-block; }
     body #app .board .cell.alive {
@@ -31,6 +31,8 @@ body {
       background-color: #f4749e; }
     body #app .board .cell.dead {
       background-color: #000000; }
+  body #app .game-info {
+    font-size: 20px; }
 
 @media (min-width: 1200px) {
   body > .container > #app .board .cell-row {
